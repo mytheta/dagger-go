@@ -1,0 +1,32 @@
+name: build and test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dagger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup 
+        uses: actions/checkout@v2
+      - name: Update project
+        uses: dagger/dagger-for-github@v3
+        with:
+          version: 0.2
+          cmds: |
+            project init
+            project update
+      - name: Build 
+        uses: dagger/dagger-for-github@v3
+        with:
+          version: 0.2
+          cmds: |
+            do test
+      - name: Test
+        uses: dagger/dagger-for-github@v3
+        with:
+          version: 0.2
+          cmds: |
+            do test
